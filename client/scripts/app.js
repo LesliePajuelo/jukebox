@@ -64,20 +64,23 @@ getInitialState: function(){
 
   },
   playList: function(){
-  console.log(this.state.songs[0].id);
+  //console.log(this);
+
 
   SC.stream('/tracks/' + this.state.songs[0].id).then(function(player){
     player.play();
   })
-
-
   },
   render: function(){
 
     for(var i =0; i < trackArray.length; i++){
 
-      songs.push(<div onClick={this.playList}> {this.state.songs[i].title} </div>)
-      console.log(this)
+      songs.push( 
+        <div classame = "artwork">
+        <img onClick={this.playList} src={ this.state.songs[i].artwork_url } className="img-thumbnail artwork"></img>
+         <div> {this.state.songs[i].title} </div>
+         </div>
+         )
       // songUrl.push(<div > </div>)
       
     }
