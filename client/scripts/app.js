@@ -64,18 +64,25 @@ getInitialState: function(){
 
   },
   playList: function(){
-  console.log({songUrl});
+  console.log(this.state.songs[0].id);
+
+  SC.stream('/tracks/' + this.state.songs[0].id).then(function(player){
+    player.play();
+  })
 
 
   },
   render: function(){
 
     for(var i =0; i < trackArray.length; i++){
+
       songs.push(<div onClick={this.playList}> {this.state.songs[i].title} </div>)
-      console.log(this.state.songs)
+      console.log(this)
       // songUrl.push(<div > </div>)
       
     }
+
+
 
     return (
       <div className="searchBox" className ='form-group'>
