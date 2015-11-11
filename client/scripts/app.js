@@ -21,6 +21,7 @@ var App = React.createClass({
 
 var trackArray = [];
 var songs =[];
+var songUrl = [];
 
 var SearchBox = React.createClass({
 
@@ -48,12 +49,12 @@ getInitialState: function(){
       
         tracks.forEach(function(track){
           //console.log(track.title);
-          trackArray.push(track.title)
+          trackArray.push(track)
 
         });
 
       
-        console.log(trackArray);
+       ;
       self.setState({songs: trackArray}
       );
       })
@@ -62,11 +63,18 @@ getInitialState: function(){
 
 
   },
+  playList: function(){
+  console.log({songUrl});
 
+
+  },
   render: function(){
-    songs = [];
+
     for(var i =0; i < trackArray.length; i++){
-      songs.push(<li> {this.state.songs[i]} </li>);
+      songs.push(<div onClick={this.playList}> {this.state.songs[i].title} </div>)
+      console.log(this.state.songs)
+      // songUrl.push(<div > </div>)
+      
     }
 
     return (
@@ -76,11 +84,13 @@ getInitialState: function(){
         <input type="submit" value="Search"/>
       </form>
   
-    <ul>{songs}</ul>
-  
+    <div className = 'row'>{songs}</div>
+      
     </div>)
 
   }
+
+
 });
 
 React.render(
