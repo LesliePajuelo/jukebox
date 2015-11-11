@@ -5,55 +5,81 @@ SC.initialize({
 client_id: 'c83ae0c3e8e136718f6d9a66049ff9db'
 });
 
-var trackArray = ["song"];
-var SearchBox = React.createClass({
 
+
+
+var App = React.createClass({
+
+ render: function(){
+  return(<div>
+    <h1>App</h1>
+  </div>)
+ }
+
+})
+
+
+var trackArray = [];
+var songs =[];
+
+var SearchBox = React.createClass({
 
 getInitialState: function(){
         return {
             songs:[]
         }
     },
-//HERA
-//search input to q: works!
+
   handleChange: function(e){
     this.setState({
-      value:e.target.value
+      value: e.target.value
     });
   },
 
-  handleSubmit : function(){
-  console.log(this.state.value);
+  handleSubmit : function(event){
+    event.preventDefault();
 
-      SC.get('/tracks', {
+  console.log(this.state.value);
+  var self = this;
+  var handled = SC.get('/tracks', {
       q: this.state.value
       }).then(function(tracks){
         console.log("PROMISE")
       
         tracks.forEach(function(track){
-          trackArray.push(track)
+          //console.log(track.title);
+          trackArray.push(track.title)
+
         });
-      alert("boo "+trackArray[0].title);
 
-      this.setState(function(){
-      return {songs: trackArray[0].title}
-      });
-
-      console.log(trackArray);
-      })//then
+      
+        console.log(trackArray);
+      self.setState({songs: trackArray}
+      );
+      })
+       
 
 
 
   },
 
   render: function(){
+    songs = [];
+    for(var i =0; i < trackArray.length; i++){
+      songs.push(<li> {this.state.songs[i]} </li>);
+    }
+
     return (
       <div className="searchBox" className ='form-group'>
-      <form className="searchForm" onSubmit={this.handleSubmit}> //HERA!
+      <form className="searchForm" onSubmit={this.handleSubmit}>
         <input type="text" placeholder='Search for your jam' value={this.state.value} onChange={this.handleChange} />
         <input type="submit" value="Search"/>
       </form>
+  
+    <ul>{songs}</ul>
+  
     </div>)
+
   }
 });
 
@@ -62,33 +88,7 @@ React.render(
   document.getElementById('jukebox')
   );
 
-var Results = React.createClass({
 
-  getResults: function(){
-    console.log('getResults');
 
-  // });
-  },
 
-  render: function(){
-    return (<p>{trackArray}</p>)
-}
 
-})
-
-React.render(
-  <Results />,
-  document.getElementById('results')
-  );
-// var Tracker = React.createClass({
-  
-//   render:function(){
-//     return(
-//       <div class="title">{this.props.track.title}</div>
-//       )
-//   }
-// })
-  
-// var Playlist = React.createClass({
-
-// })
